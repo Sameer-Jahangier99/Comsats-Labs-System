@@ -22,6 +22,10 @@ import { allProducts, deleteProduct, updateProducts } from "src/services/actions
 import { useHistory } from "react-router-dom"
 import { imageUrl } from 'src/utils.js/imageUrl'
 import Breadcrumbs from 'src/components/Breadcrumbs'
+import { Modal, Button } from 'react-bootstrap';
+
+import axios from 'axios';
+import { BASE_URL } from 'src/services/axios';
 
 const AllEquipments = () => {
   const breadCrumbsInfo = [{ name: "Home", href: '/' }, { name: "Inventory" }, { name: "All Equipment" }];
@@ -37,17 +41,21 @@ const AllEquipments = () => {
   const [id, setId] = useState();
   const [visible, setVisible] = useState(false)
   const [show, setShow] = useState(false)
+  const [deleteId, setDeleteId] = useState("");
+  const [modalShow, setModalShow] = React.useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [index, setIndex] = useState();
   const history = useHistory();
-  const dispatch = useDispatch()
+
   const { products, error } = useSelector((state) => state.allProductRed)
-
   const { loading } = useSelector((state) => state.updateProduct)
-
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   useEffect(() => {
     dispatch(allProducts())
-  }, [dispatch, loading])
+  }, [dispatch, loading, refresh])
   const editHandler = (product) => {
     setName(product.name)
     setSpecification(product.specification)
@@ -80,13 +88,10 @@ const AllEquipments = () => {
 
   };
 
-  // const deleteHandler = (id) => {
-  //   console.log(id)
-  //   if (window.confirm('are you sure')) {
-  //     dispatch(deleteProduct(id))
-  //   }
-
-  // }
+  const deleteHandler = (id) => {
+    setDeleteId(id);
+    setModalShow(true)
+  }
 
   const editSpecHandler = (item, idx) => {
     setIndex(idx);
@@ -97,14 +102,66 @@ const AllEquipments = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (productImage) {
+      const formData = new FormData();
+      formData.append('_id', id)
+      formData.append("productImage", productImage, productImage.name);
+      dispatch(updateProducts(formData))
+    } else {
+      let data = {
+        name, _id: id, specification, lab
+      }
+      console.log("data", data);
+    }
+    // dispatch(updateProducts(formData))
+  }
 
-    const formData = new FormData();
-    formData.append("productImage", productImage, productImage.name);
-    formData.append('name', name);
-    formData.append('_id', id)
-    formData.append('specification', JSON.stringify(specification));
-    formData.append('lab', lab)
-    dispatch(updateProducts(formData))
+  const deleteComplaint = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+    const { data } = await axios.delete(`${BASE_URL}/product/${deleteId}`, config)
+    console.log(data)
+    if (data.success) {
+      setDeleteId("");
+      setModalShow(false)
+      setRefresh(true)
+    }
+  }
+
+
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="md"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+
+        <Modal.Body className="">
+          <div className='d-flex justify-content-between'>
+            <h4>Are you sure ?</h4>
+            <i className="fa fa-times mouse-over " aria-hidden="true" onClick={() => setModalShow(false)}></i>
+          </div>
+
+          <div className='row'>
+            <div className='col-12 d-flex justify-content-center'>
+              <Button variant="danger" size="lg" onClick={deleteComplaint} className="mouse-over" style={{ width: "10rem" }}>
+                Yes
+              </Button>{' '}
+              <Button variant="warning" size="lg" className='ml-3 mouse-over' onClick={() => setModalShow(false)} style={{ width: "10rem" }}>
+                No
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+
+      </Modal>
+    );
   }
 
 
@@ -198,15 +255,15 @@ const AllEquipments = () => {
                             <button onClick={() => editHandler(product)}>
                               <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
-                            <button onClick={() => history.push(`/viewEquipment/${product._id}`)}>
+                            {/* <button onClick={() => history.push(`/viewEquipment/${product._id}`)}>
                               view
+                            </button> */}
+                            <button
+                              style={{ padding: '5px' }}
+                              onClick={() => deleteHandler(product._id)}
+                            >
+                              <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
-                            {/* <button
-                            style={{ padding: '5px' }}
-                            onClick={() => deleteHandler(product._id)}
-                          >
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                          </button> */}
                           </td>
                         </tr>
                       ))}
@@ -356,7 +413,12 @@ const AllEquipments = () => {
             <CButton color="primary" onClick={submitHandler}> {loading ? "Loading" : "upload Product"}</CButton>
           </CModalFooter>
         </CModal>
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
       </main>
+
     </>
   )
 }

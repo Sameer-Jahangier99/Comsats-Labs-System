@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { allComplaintAction, complaintApproveByDco } from "src/services/actions/complaintActions";
 import {
-  CButton
+  CButton, CFormSelect
 } from '@coreui/react'
 import axios from 'axios';
 import { BASE_URL } from 'src/services/axios';
@@ -16,6 +16,7 @@ const AllComplaints = () => {
 
   const { msg, loading: approveLoading } = useSelector((state) => state.complaintApproveByDcoReducer)
   const [allComplaints, setAllComplaints] = useState([]);
+  const [complaintHistory, setComplaintHistory] = useState([]);
 
   const approveComplaint = async (item) => {
     const config = {
@@ -67,13 +68,56 @@ const AllComplaints = () => {
     }
     const { data } = await axios.get(`${BASE_URL}/complaint/committee`, config)
     setAllComplaints(data);
+    setComplaintHistory(data);
   }, [dispatch])
 
+
+  const filterHandler = (value) => {
+    if (value == "all") {
+      setAllComplaints(complaintHistory)
+    }
+    if (value == "software") {
+      const res = complaintHistory.filter((item) => item.type == "software");
+      setAllComplaints(res);
+    }
+    if (value == "hardware") {
+      const res = complaintHistory.filter((item) => item.type == "hardware");
+      setAllComplaints(res);
+    }
+  }
 
   return (
     <>
       <main className='main-div'>
         <Breadcrumbs breadCrumbsInfo={breadCrumbsInfo} />
+        <div className='row mb-4'>
+          <div className='col-6'>
+
+          </div>
+          <div className='col-6'>
+            <div className='row'>
+              <div className='col-6 d-flex justify-content-center'>
+                <div className='d-flex justify-content-center align-items-center mr-3'>
+                  Complaints
+                </div>
+
+                <CFormSelect aria-label="Default select example" onChange={(e) => {
+                  filterHandler(e.target.value)
+                }} >
+                  <option value="all">All</option>
+                  <option value="software">Software</option>
+                  <option value="hardware">Hardware</option>
+
+                </CFormSelect>
+              </div>
+              <div className='col-6'>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <div>
           <h4 className="font-semibold">All Complaints</h4>
         </div>
@@ -107,6 +151,12 @@ const AllComplaints = () => {
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
+                        Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
                         Added By
                       </th>
                       <th
@@ -124,30 +174,33 @@ const AllComplaints = () => {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.title}</div>
+                                <div className="text-base font-medium text-gray-900">{item.title}</div>
                               </div>
                             </div>
                           </td>
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.lab}</div>
+                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {item.product && item.product.name}
                           </td>
+                          <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {item.type && item.type}
+                          </td>
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.user && item.user.name}</div>
+                                <div className="text-base font-medium text-gray-900">{item.user && item.user.name}</div>
                               </div>
                             </div>
                           </td>
 
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            {item.committeApproved == null ? <> <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.committeApproved ? 'Approved' : "Approve"}</CButton> <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{item.committeApproved == null ? 'Reject ' : "Rejected"}</CButton> </> : item.committeApproved ? <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.committeApproved ? 'Approved' : "Approve"}</CButton> : <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{!item.committeApproved ? 'Rejected' : "Reject"}</CButton>}
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium d-flex justify-content-start">
+                            {item.committeApproved == null ? <> <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.committeApproved ? 'Approved' : "Approve"}</CButton> <CButton color="danger" className='text-white ml-2' onClick={() => rejectComplaint(item)}>{item.committeApproved == null ? 'Reject ' : "Rejected"}</CButton> </> : item.committeApproved ? <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.committeApproved ? 'Approved' : "Approve"}</CButton> : <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{!item.committeApproved ? 'Rejected' : "Reject"}</CButton>}
 
                           </td>
                         </tr>

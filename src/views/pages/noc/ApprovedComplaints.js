@@ -16,14 +16,11 @@ const AllComplaints = () => {
     const dispatch = useDispatch();
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
-
     const [allComplaints, setAllComplaints] = useState([]);
     const [complaintHistory, setComplaintHistory] = useState([]);
     const [progressComplaints, setProgressComplaints] = useState([]);
     const [showProgress, setShowProgess] = useState(false);
     const history = useHistory();
-
-
     function dateDiffInDays(a, b) {
         // Discard the time and time-zone information.
         const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
@@ -42,8 +39,6 @@ const AllComplaints = () => {
             },
         }
         const { data } = await axios.get(`${BASE_URL}/complaint/allComplaintAprrovedByNOC`, config)
-
-
         setAllComplaints(data);
         setComplaintHistory(data);
         setProgressComplaints(data);
@@ -54,7 +49,7 @@ const AllComplaints = () => {
     const filterHandler = (value) => {
         if (value === "deadline") {
             setShowProgess(true)
-            let res = allComplaints.filter((item) => item.deadline)
+            let res = complaintHistory.filter((item) => item.deadline && item.status == "progress")
             setShowProgess(true)
             setAllComplaints(res);
         }
@@ -62,11 +57,17 @@ const AllComplaints = () => {
             setShowProgess(false)
             setAllComplaints(complaintHistory)
         }
+        if (value === "completed") {
+            setShowProgess(true)
+            let res = complaintHistory.filter((item) => item.status == "completed")
+            setShowProgess(true)
+            setAllComplaints(res);
+
+        }
 
     }
 
     const complaintCompleted = async (item) => {
-
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ const AllComplaints = () => {
                                 }}>
                                     <option value="all">All</option>
                                     <option value="deadline">In Progress</option>
-
+                                    <option value="completed">Completed</option>
                                 </CFormSelect>
                             </div>
                             <div className='col-6'>
@@ -168,37 +169,36 @@ const AllComplaints = () => {
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {allComplaints && allComplaints.length ?
                                             allComplaints.map((item) => (
-                                                <tr key={item._id} className={`${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -4 ? "bg-red-500" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -2 ? "bg-yellow-400" : ""} `} `}>
+                                                <tr key={item._id} className={`${item.status == "completed" ? "bg-green-400" : dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -4 ? "bg-red-500" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -2 ? "bg-yellow-400" : ""} `} `}>
 
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
-                                                                <div className="text-sm font-medium text-gray-900">{item.title}</div>
+                                                                <div className="text-base font-medium text-gray-900">{item.title}</div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
-                                                                <div className="text-sm font-medium text-gray-900">{item.lab}</div>
+                                                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                    <td className=" text-base px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                                         {item.product && item.product.name}
                                                     </td>
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
-                                                                <div className="text-sm font-medium text-gray-900">{item.type && item.type}</div>
+                                                                <div className="text-base font-medium text-gray-900">{item.type && item.type}</div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-base font-medium">
                                                         {
-                                                            dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) < 0 ? `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(1, 4)} day exeeded ` : `${isNaN(dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline))) ? "No deadline given" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(0, 4)} days left`} `
+                                                            item.status == "completed" ? "Completed" : dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) < 0 ? `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(1, 4)} day exeeded ` : `${isNaN(dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline))) ? "No deadline given" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(0, 4)} days left`} `
                                                         }
-
                                                     </td>
 
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -271,7 +271,7 @@ const AllComplaints = () => {
                                     <tbody className="bg-white divide-y divide-gray-200">
                                         {allComplaints && allComplaints.length ?
                                             allComplaints.map((item) => (
-                                                <tr key={item._id} className={`${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -4 ? "bg-red-500" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -2 ? "bg-yellow-400" : ""} `} `}>
+                                                <tr key={item._id} className={`${item.status == "completed" ? "bg-green-400" : dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -4 ? "bg-red-500" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) <= -2 ? "bg-yellow-400" : ""} `} `}>
 
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <div className="flex items-center">
@@ -299,7 +299,7 @@ const AllComplaints = () => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                         {
-                                                            dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) < 0 ? `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(1, 4)} day exeeded ` : `${isNaN(dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline))) ? "No deadline given" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(0, 4)} days left`} `
+                                                            item.status == "completed" ? "Completed" : dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) < 0 ? `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(1, 4)} day exeeded ` : `${isNaN(dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline))) ? "No deadline given" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(0, 4)} days left`} `
                                                         }
 
                                                     </td>

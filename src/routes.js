@@ -37,6 +37,7 @@ const AcceptedComplaints = React.lazy(() => import('./views/pages/staff-complain
 //request
 const AddRequest = React.lazy(() => import('./views/pages/request/AddRequest'))
 const AllRequests = React.lazy(() => import('./views/pages/request/AllRequests'))
+const AcceptedRequests = React.lazy(() => import('./views/pages/request/AcceptedRequest'))
 //Forms
 // const ChecksRadios = React.lazy(() => import('./views/components/forms/checks-radios/ChecksRadios'))
 // const FloatingLabels = React.lazy(() =>
@@ -65,9 +66,9 @@ const UploadQrCode = React.lazy(() => import('./views/pages/Inventory/UploadQrCo
 
 //Reports
 const Weekly = React.lazy(() => import('./views/pages/reports/Weekly'))
-const Monthly = React.lazy(() => import('./views/pages/reports/Monthly'))
 const Yearly = React.lazy(() => import('./views/pages/reports/Yearly'))
-const SemesterWise = React.lazy(() => import('./views/pages/reports/SemesterWise'))
+const RequestReports = React.lazy(() => import('./views/pages/reports/Requests'))
+const ComplaintsReports = React.lazy(() => import('./views/pages/reports/Complaints'))
 
 //Comitte Complaints pages
 const CommitteeAcceptedComplaints = React.lazy(() =>
@@ -124,6 +125,7 @@ const NocApprovedComplaints = React.lazy(() => import("./views/pages/noc/Approve
 const NocComplaintAction = React.lazy(() => import("./views/pages/noc/ComplaintTime"))
 const NocRequests = React.lazy(() => import("./views/pages/noc-requests/AllRequest"))
 const NocApproveRequests = React.lazy(() => import("./views/pages/noc-requests/ApproveRequests"))
+const NocRequestAction = React.lazy(() => import("./views/pages/noc-requests/RequestTime"));
 //works
 const WorksComplaints = React.lazy(() => import('./views/pages/works/AllComplaints'))
 const WorksApprovedComplaints = React.lazy(() => import("./views/pages/works/ApprovedComplaints"))
@@ -154,11 +156,11 @@ const routes = [
   { path: '/scanequipment', name: 'Scan Equipment', component: ScanEquipment, exact: true },
   { path: '/addequipment', name: 'Barcode Search', component: AddEquipment, exact: true },
   { path: '/weeklyreports', name: 'Weekly Reports', component: Weekly, exact: true },
-  { path: '/monthlyreports', name: 'Monthly Reports', component: Monthly, exact: true },
+  { path: '/complaint/reports', name: 'Complaints', component: ComplaintsReports, exact: true },
   {
-    path: '/semesterwisereports',
-    name: 'Semester Wise Reports',
-    component: SemesterWise,
+    path: '/request/reports',
+    name: 'Request Reports',
+    component: RequestReports,
     exact: true,
   },
   {
@@ -214,6 +216,12 @@ const routes = [
     path: '/all/requests',
     name: 'Add Request',
     component: AllRequests,
+    exact: true,
+  },
+  {
+    path: '/all/accepted/requests',
+    name: 'Accepted Request',
+    component: AcceptedRequests,
     exact: true,
   },
   {
@@ -282,6 +290,12 @@ const routes = [
     path: '/noc/complaintAction/:id',
     name: 'Complaint Action',
     component: NocComplaintAction,
+    exact: true,
+  },
+  {
+    path: '/noc/RequestAction/:id',
+    name: 'Request Action',
+    component: NocRequestAction,
     exact: true,
   },
   {

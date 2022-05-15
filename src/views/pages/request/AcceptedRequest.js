@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { allComplaintAction } from "src/services/actions/complaintActions";
 import {
+    CRow,
+    CCol,
     CFormSelect
+
 } from '@coreui/react'
 
 import axios from 'axios';
@@ -10,7 +13,7 @@ import { BASE_URL } from 'src/services/axios';
 import { dateDisplay } from "src/services/helper/helper"
 import Breadcrumbs from 'src/components/Breadcrumbs'
 
-const AcceptedComplaints = () => {
+const AcceptedRequests = () => {
     const breadCrumbsInfo = [{ name: "Home", href: '/' }, { name: "Complaints" }, { name: "Accepted Complaints" }];
     const dispatch = useDispatch();
 
@@ -30,10 +33,8 @@ const AcceptedComplaints = () => {
                 Authorization: `Bearer ${userInfo.token}`,
             },
         }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
+        const { data } = await axios.get(`${BASE_URL}/request/accepted/by/all`, config)
         setAllComplaints(data && data.data);
-        setShowSoftware(true)
-
 
     }, [])
 
@@ -45,9 +46,8 @@ const AcceptedComplaints = () => {
                 Authorization: `Bearer ${userInfo.token}`,
             },
         }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/hardware`, config)
+        const { data } = await axios.get(`${BASE_URL}/request/accepted/hardware/all`, config)
         setAllComplaints(data && data.data);
-        setShowSoftware(false)
     }
 
 
@@ -58,13 +58,27 @@ const AcceptedComplaints = () => {
                 Authorization: `Bearer ${userInfo.token}`,
             },
         }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
+        const { data } = await axios.get(`${BASE_URL}/request/accepted/software/all`, config)
         setAllComplaints(data && data.data);
-        setShowSoftware(true)
+
+    }
+
+    const allRequestGet = async () => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        }
+        const { data } = await axios.get(`${BASE_URL}/request/accepted/by/all`, config)
+        setAllComplaints(data && data.data);
     }
 
 
     const filterHandler = (value) => {
+        if (value == "all") {
+            allRequestGet();
+        }
         if (value == "software") {
             softwareComplaints();
         }
@@ -93,7 +107,7 @@ const AcceptedComplaints = () => {
                                 <CFormSelect aria-label="Default select example" onChange={(e) => {
                                     filterHandler(e.target.value)
                                 }} >
-
+                                    <option value="all">All</option>
                                     <option value="software">Software</option>
                                     <option value="hardware">Hardware</option>
                                 </CFormSelect>
@@ -106,7 +120,7 @@ const AcceptedComplaints = () => {
                     </div>
                 </div>
                 <div>
-                    <h4 className="font-semibold">All Complaints</h4>
+                    <h4 className="font-semibold">Accepted Requests</h4>
                 </div>
                 <div className="flex flex-col">
                     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -128,12 +142,7 @@ const AcceptedComplaints = () => {
                                             >
                                                 Lab
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                            >
-                                                Product Name
-                                            </th>
+
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -158,17 +167,12 @@ const AcceptedComplaints = () => {
                                             >
                                                 Committee Aprroved
                                             </th>
-                                            {showSoftware ? <th
+                                            <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                             >
                                                 Noc Status
-                                            </th> : <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                            >
-                                                works Status
-                                            </th>}
+                                            </th>
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -195,9 +199,7 @@ const AcceptedComplaints = () => {
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {item.product && item.product.name}
-                                                    </td>
+
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
@@ -218,14 +220,11 @@ const AcceptedComplaints = () => {
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {item.committeApproved ? "Approved" : "pending"}
                                                     </td>
-                                                    {
-                                                        showSoftware ? <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                            {item.nocApproved ? "Approved" : "pending"}
-                                                        </td> : <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                            {item.worksApproved
-                                                                ? "Approved" : "pending"}
-                                                        </td>
-                                                    }
+
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        {item.nocApproved ? "Approved" : "pending"}
+                                                    </td>
+
 
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                         {item.deadline ? dateDisplay(item.deadline) : "no date give yet"}
@@ -243,4 +242,4 @@ const AcceptedComplaints = () => {
     )
 }
 
-export default AcceptedComplaints
+export default AcceptedRequests

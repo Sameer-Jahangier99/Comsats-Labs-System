@@ -8,6 +8,7 @@ import {
 
 } from '@coreui/react'
 
+import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { BASE_URL } from 'src/services/axios';
 import Breadcrumbs from "src/components/Breadcrumbs"
@@ -19,6 +20,9 @@ const AllComplaints = () => {
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
     const [allComplaints, setAllComplaints] = useState([]);
+    const [modalShow, setModalShow] = React.useState(false);
+    const [refresh, setRefresh] = useState(false);
+    const [deleteId, setDeleteId] = useState("");
     useEffect(async () => {
         dispatch(allComplaintAction());
         const config = {
@@ -31,7 +35,7 @@ const AllComplaints = () => {
         setAllComplaints(data && data.data);
 
         setShowSoftware(true);
-    }, [dispatch])
+    }, [dispatch, refresh])
     const hardwareComplaint = async () => {
         const config = {
             headers: {
@@ -63,6 +67,56 @@ const AllComplaints = () => {
             hardwareComplaint();
         }
 
+    }
+
+    const deleteHandler = (id) => {
+        setDeleteId(id);
+        setModalShow(true)
+    }
+
+    const deleteComplaint = async () => {
+
+        const { data } = await axios.delete(`${BASE_URL}/complaint/delete/${deleteId}`)
+        if (data.success) {
+            setDeleteId("");
+            setModalShow(false)
+            setRefresh(true)
+        }
+    }
+
+    const editHandler = (item) => {
+        console.log("update handler");
+    }
+
+    function MyVerticallyCenteredModal(props) {
+        return (
+            <Modal
+                {...props}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+
+                <Modal.Body className="">
+                    <div className='d-flex justify-content-between'>
+                        <h4>Are you sure ?</h4>
+                        <i className="fa fa-times mouse-over " aria-hidden="true" onClick={() => setModalShow(false)}></i>
+                    </div>
+
+                    <div className='row'>
+                        <div className='col-12 d-flex justify-content-center'>
+                            <Button variant="danger" size="lg" onClick={deleteComplaint} className="mouse-over" style={{ width: "10rem" }}>
+                                Yes
+                            </Button>{' '}
+                            <Button variant="warning" size="lg" className='ml-3 mouse-over' onClick={() => setModalShow(false)} style={{ width: "10rem" }}>
+                                No
+                            </Button>
+                        </div>
+                    </div>
+                </Modal.Body>
+
+            </Modal>
+        );
     }
     return (
         <>
@@ -216,7 +270,10 @@ const AllComplaints = () => {
                                                         </td>
                                                     }
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <button >
+                                                        <button
+                                                            onClick={() => editHandler(item)}
+
+                                                        >
                                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         </button>
                                                         <button
@@ -235,6 +292,10 @@ const AllComplaints = () => {
                     </div>
                 </div>
             </main>
+            <MyVerticallyCenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+            />
         </>
     )
 }

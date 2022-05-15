@@ -53,51 +53,51 @@ export const adminNav = [
         name: 'Scan Equipment',
         to: '/scanequipment',
       },
-      {
-        component: CNavItem,
-        name: 'Barcode Search',
-        to: '/barcodesearch',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Barcode Search',
+      //   to: '/barcodesearch',
+      // },
       {
         component: CNavItem,
         name: 'Add Equipment',
         to: '/addequipment',
       },
-      {
-        component: CNavItem,
-        name: 'Update Equipement',
-        to: '/updateequipment',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Update Equipement',
+      //   to: '/updateequipment',
+      // },
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Reports',
-    to: '/',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Weekly Reports',
-        to: '/weeklyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Montlhy Reports',
-        to: '/monthlyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Semester Wise Reports',
-        to: '/semesterwisereports',
-      },
-      {
-        component: CNavItem,
-        name: 'Yearly Reports',
-        to: '/yearlyreports',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Reports',
+  //   to: '/',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Weekly Reports',
+  //       to: '/weeklyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Montlhy Reports',
+  //       to: '/monthlyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Semester Wise Reports',
+  //       to: '/semesterwisereports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Yearly Reports',
+  //       to: '/yearlyreports',
+  //     },
+  //   ],
+  // },
 ]
 
 export const staffNav = [
@@ -184,21 +184,27 @@ export const staffNav = [
         name: 'All Requests',
         to: '/all/requests',
       },
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Feedback',
-    to: '/',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-    items: [
       {
         component: CNavItem,
-        name: 'Add Feedback',
-        to: '/addfeedback',
+        name: 'Accepted Requests',
+        to: '/all/accepted/requests',
       },
+
     ],
   },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Feedback',
+  //   to: '/',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Add Feedback',
+  //       to: '/addfeedback',
+  //     },
+  //   ],
+  // },
 ]
 
 export const committeNav = [
@@ -217,34 +223,34 @@ export const committeNav = [
     name: 'Logged In Committee',
   },
 
-  {
-    component: CNavGroup,
-    name: 'Reports',
-    to: '/',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Weekly Reports',
-        to: '/weeklyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Montlhy Reports',
-        to: '/monthlyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Semester Wise Reports',
-        to: '/semesterwisereports',
-      },
-      {
-        component: CNavItem,
-        name: 'Yearly Reports',
-        to: '/yearlyreports',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Reports',
+  //   to: '/',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Weekly Reports',
+  //       to: '/weeklyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Montlhy Reports',
+  //       to: '/monthlyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Semester Wise Reports',
+  //       to: '/semesterwisereports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Yearly Reports',
+  //       to: '/yearlyreports',
+  //     },
+  //   ],
+  // },
   {
     component: CNavGroup,
     name: 'Complaints',
@@ -256,16 +262,16 @@ export const committeNav = [
         name: 'All Complaints',
         to: '/committeeallcomplaints',
       },
-      {
-        component: CNavItem,
-        name: 'Accepted Complaints',
-        to: '/committeeacceptedcomplaints',
-      },
-      {
-        component: CNavItem,
-        name: 'Reject Comlaints',
-        to: '/committeerejectedcomplaints',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Accepted Complaints',
+      //   to: '/committeeacceptedcomplaints',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Reject Comlaints',
+      //   to: '/committeerejectedcomplaints',
+      // },
     ],
   },
   {
@@ -280,16 +286,16 @@ export const committeNav = [
         to: '/committee/all/requests',
       },
 
-      {
-        component: CNavItem,
-        name: 'Accepted Request',
-        to: '/committeeacceptedrequest',
-      },
-      {
-        component: CNavItem,
-        name: 'Rejected Request',
-        to: '/committeerejectedrequest',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Accepted Request',
+      //   to: '/committeeacceptedrequest',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Rejected Request',
+      //   to: '/committeerejectedrequest',
+      // },
     ],
   },
 ]
@@ -415,24 +421,24 @@ export const hodNav = [
     items: [
       {
         component: CNavItem,
-        name: 'Weekly Reports',
-        to: '/weeklyreports',
+        name: 'Complaints',
+        to: '/complaint/reports',
       },
       {
         component: CNavItem,
-        name: 'Montlhy Reports',
-        to: '/monthlyreports',
+        name: 'Requests',
+        to: '/request/reports',
       },
-      {
-        component: CNavItem,
-        name: 'Semester Wise Reports',
-        to: '/semesterwisereports',
-      },
-      {
-        component: CNavItem,
-        name: 'Yearly Reports',
-        to: '/yearlyreports',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Semester Wise Reports',
+      //   to: '/semesterwisereports',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Yearly Reports',
+      //   to: '/yearlyreports',
+      // },
     ],
   },
 ]
@@ -453,34 +459,34 @@ export const dcoNav = [
     name: 'Logged In DCO',
   },
 
-  {
-    component: CNavGroup,
-    name: 'Reports',
-    to: '/',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Weekly Reports',
-        to: '/weeklyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Montlhy Reports',
-        to: '/monthlyreports',
-      },
-      {
-        component: CNavItem,
-        name: 'Semester Wise Reports',
-        to: '/semesterwisereports',
-      },
-      {
-        component: CNavItem,
-        name: 'Yearly Reports',
-        to: '/yearlyreports',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Reports',
+  //   to: '/',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Weekly Reports',
+  //       to: '/weeklyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Montlhy Reports',
+  //       to: '/monthlyreports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Semester Wise Reports',
+  //       to: '/semesterwisereports',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Yearly Reports',
+  //       to: '/yearlyreports',
+  //     },
+  //   ],
+  // },
   {
     component: CNavGroup,
     name: 'Complaints',
@@ -492,16 +498,16 @@ export const dcoNav = [
         name: 'All Complaints',
         to: '/dcoallcomplaints',
       },
-      {
-        component: CNavItem,
-        name: 'Accepted Complaints',
-        to: '/dcoacceptedcomplaints',
-      },
-      {
-        component: CNavItem,
-        name: 'Reject Comlaints',
-        to: '/dcorejectedcomplaints',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Accepted Complaints',
+      //   to: '/dcoacceptedcomplaints',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Reject Comlaints',
+      //   to: '/dcorejectedcomplaints',
+      // },
     ],
   },
   {
@@ -515,16 +521,16 @@ export const dcoNav = [
         name: 'All Request',
         to: '/dcoallrequest',
       },
-      {
-        component: CNavItem,
-        name: 'Accepted Request',
-        to: '/dcoacceptedrequest',
-      },
-      {
-        component: CNavItem,
-        name: 'Rejected Request',
-        to: '/dcorejectedrequest',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Accepted Request',
+      //   to: '/dcoacceptedrequest',
+      // },
+      // {
+      //   component: CNavItem,
+      //   name: 'Rejected Request',
+      //   to: '/dcorejectedrequest',
+      // },
     ],
   },
 ]
@@ -557,17 +563,17 @@ export const TeacherNav = [
       },
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Feedback',
-    to: '/',
-    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'To installed Software',
-        to: '/installedSoftware',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Feedback',
+  //   to: '/',
+  //   icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'To installed Software',
+  //       to: '/installedSoftware',
+  //     },
+  //   ],
+  // },
 ]

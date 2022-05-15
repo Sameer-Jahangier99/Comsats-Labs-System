@@ -153,33 +153,33 @@ const AllComplaints = () => {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.title}</div>
+                                <div className="text-base font-medium text-gray-900">{item.title}</div>
                               </div>
                             </div>
                           </td>
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.lab}</div>
+                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {item.product && item.product.name}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {item.type && item.type}
                           </td>
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-900">{item.user && item.user.name}</div>
+                                <div className="text-base font-medium text-gray-900">{item.user && item.user.name}</div>
                               </div>
                             </div>
                           </td>
 
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            {item.dcoApproved == null ? <> <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.dcoApproved ? 'Approved' : "Approve"}</CButton> <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{item.dcoApproved == null ? 'Reject ' : "Rejected"}</CButton> </> : item.dcoApproved ? <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.dcoApproved ? 'Approved' : "Approve"}</CButton> : <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{!item.dcoApproved ? 'Rejected' : "Reject"}</CButton>}
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium d-flex justify-content-start">
+                            {item.dcoApproved == null ? <> <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.dcoApproved ? 'Approved' : "Approve"}</CButton> <CButton color="danger" className='text-white ml-2' onClick={() => rejectComplaint(item)}>{item.dcoApproved == null ? 'Reject ' : "Rejected"}</CButton> </> : item.dcoApproved ? <CButton color="success" className='text-white' onClick={() => approveComplaint(item)}>{item.dcoApproved ? 'Approved' : "Approve"}</CButton> : <CButton color="danger" className='text-white' onClick={() => rejectComplaint(item)}>{!item.dcoApproved ? 'Rejected' : "Reject"}</CButton>}
 
                           </td>
                         </tr>
