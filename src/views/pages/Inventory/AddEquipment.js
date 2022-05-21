@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import QRCode from 'qrcode'
 import QrReader from 'react-qr-reader'
 import {
@@ -16,6 +16,7 @@ import {
 import { uploadProduct } from "../../../services/actions/productActions"
 import { useDispatch, useSelector } from 'react-redux'
 import Breadcrumbs from 'src/components/Breadcrumbs'
+import axios from 'axios'
 
 const AddEquipments = () => {
   const breadCrumbsInfo = [{ name: "Home", href: '/' }, { name: "Inventory" }, { name: "Add Equipment" }];
@@ -27,6 +28,8 @@ const AddEquipments = () => {
   const [value, setValue] = useState('');
   const [lab, setLab] = useState('');
   const [uploadedFileName, setUploadedFileName] = useState(null);
+  const[labs, setLabs] = useState([]);
+  const[labId, setLabId] = useState();
   const [productImage, setProductImage] = useState('');
   const inputRef = useRef(null);
   const qrRef = useRef(null)
@@ -45,6 +48,14 @@ const AddEquipments = () => {
     }
   }
 
+
+  useEffect(async()=>{
+    const { data } = await axios.get('/lab/' )
+    if(data.success)
+    {
+      setLabs(data.data);
+    }
+  },[])
   const specificationHandler = (e, key, value) => {
     e.preventDefault();
     if (key && value) {
@@ -67,6 +78,7 @@ const AddEquipments = () => {
     e.preventDefault();
     console.log(specification);
     if (productImage && name && lab && specification) {
+     
       const formData = new FormData();
       formData.append("productImage", productImage, productImage.name);
       formData.append('name', name);
@@ -79,6 +91,8 @@ const AddEquipments = () => {
       console.log(formData);
     }
   }
+
+
 
   return (
     <>
@@ -130,13 +144,13 @@ const AddEquipments = () => {
                       aria-label="Default select example"
                       onChange={(e) => {
                         setLab(e.target.value)
+                        
                       }}
                     >
                       <option>Select Lab</option>
-                      <option value="Lab-1">Lab-1</option>
-                      <option value="Lab-2">Lab-2</option>
-                      <option value="Lab-3">Lab-3</option>
-                      <option value="Lab-4">Lab-4</option>
+                      {labs.length && labs.map((item)=> {
+ return <option value={item._id}>{item.name}</option>
+                      })}
                     </CFormSelect>
                   </CInputGroup>
                 </CCol>
@@ -171,7 +185,7 @@ const AddEquipments = () => {
                 </CRow>
                 <CRow>
                   <CCol md={12}>
-                    <p className="text-gray-800 dark:text-gray-200 text-xl font-bold">Add specification</p>
+                    <p className="text-gray-800 dark:text-gray-200 text-xl font-bold">Add Hardware</p>
                   </CCol>
                 </CRow>
                 <CRow className='my-4'>

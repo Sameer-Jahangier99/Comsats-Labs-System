@@ -36,6 +36,8 @@ const ScanEquipment = () => {
     setShowCam(true);
     setDisplayProduct(false);
   }
+
+
   return (
     <main>
       <Breadcrumbs breadCrumbsInfo={breadCrumbsInfo} />
@@ -80,7 +82,7 @@ const ScanEquipment = () => {
                     <CRow>
                       <CCol md={12}>
                         <h1 class="text-gray-900 font-bold text-2xl text-center">
-                          {product && product.product.name}
+                          {product && product.product.name && product.product.name }
                         </h1>
                       </CCol>
                     </CRow>
@@ -92,7 +94,7 @@ const ScanEquipment = () => {
                           </h3>
                           <div>
                             <p class="text-gray-600 text-xl ml-4">
-                              {product && product.product.lab}
+                              {product && product.product.lab.name}
                             </p>
                           </div>
                         </div>
@@ -104,7 +106,7 @@ const ScanEquipment = () => {
                           </h3>
                           <div>
                             <p class="text-gray-600 text-xl ml-4">
-                              {product && product.product.user.name}
+                              {product && product.product.user && product.product.user.name && product.product.user.name }
                             </p>
                           </div>
                         </div>

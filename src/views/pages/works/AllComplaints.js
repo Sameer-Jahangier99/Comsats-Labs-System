@@ -130,12 +130,12 @@ const AllComplaints = () => {
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
-                                                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
+                                                                <div className="text-base font-medium text-gray-900">{item.lab && item.lab.name}</div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {item.product && item.product.name}
+                                                        {item.hardware && item.hardware.product && item.hardware.product.name }
                                                     </td>
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">

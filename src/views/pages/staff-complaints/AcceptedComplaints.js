@@ -23,55 +23,65 @@ const AcceptedComplaints = () => {
     const [showSoftware, setShowSoftware] = useState(false);
 
 
-    useEffect(async () => {
+    // useEffect(async () => {
+    //     const config = {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${userInfo.token}`,
+    //         },
+    //     }
+    //     const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
+    //     setAllComplaints(data && data.data);
+    //     setShowSoftware(true)
+
+
+    // }, [])
+
+
+    // const hardwareComplaint = async () => {
+    //     const config = {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${userInfo.token}`,
+    //         },
+    //     }
+    //     const { data } = await axios.get(`${BASE_URL}/complaint/accepted/hardware`, config)
+    //     setAllComplaints(data && data.data);
+    //     setShowSoftware(false)
+    // }
+
+
+    // const softwareComplaints = async () => {
+    //     const config = {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Authorization: `Bearer ${userInfo.token}`,
+    //         },
+    //     }
+    //     const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
+    //     setAllComplaints(data && data.data);
+    //     setShowSoftware(true)
+    // }
+
+    useEffect(async()=>{
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${userInfo.token}`,
             },
         }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
+        const { data } = await axios.get(`${BASE_URL}/complaint`, config)
         setAllComplaints(data && data.data);
-        setShowSoftware(true)
-
-
-    }, [])
-
-
-    const hardwareComplaint = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`,
-            },
-        }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/hardware`, config)
-        setAllComplaints(data && data.data);
-        setShowSoftware(false)
-    }
-
-
-    const softwareComplaints = async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`,
-            },
-        }
-        const { data } = await axios.get(`${BASE_URL}/complaint/accepted/by/all`, config)
-        setAllComplaints(data && data.data);
-        setShowSoftware(true)
-    }
-
+        setComplaintHistory(data && data.data);
+    })
 
     const filterHandler = (value) => {
         if (value == "software") {
-            softwareComplaints();
+            console.log("software")
         }
         if (value == "hardware") {
-            hardwareComplaint();
+            console.log("hardware")
         }
-
 
     }
 
@@ -93,9 +103,11 @@ const AcceptedComplaints = () => {
                                 <CFormSelect aria-label="Default select example" onChange={(e) => {
                                     filterHandler(e.target.value)
                                 }} >
-
+                                   <option value="all">All</option>
                                     <option value="software">Software</option>
                                     <option value="hardware">Hardware</option>
+                                    <option value="hardware">Network</option>
+                                    <option value="hardware">Other</option>
                                 </CFormSelect>
                             </div>
                             <div className='col-6'>

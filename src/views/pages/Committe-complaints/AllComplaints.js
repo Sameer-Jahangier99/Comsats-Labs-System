@@ -84,6 +84,14 @@ const AllComplaints = () => {
       const res = complaintHistory.filter((item) => item.type == "hardware");
       setAllComplaints(res);
     }
+    if (value == "network") {
+      const res = complaintHistory.filter((item) => item.type == "network");
+      setAllComplaints(res);
+    }
+    if (value == "other") {
+      const res = complaintHistory.filter((item) => item.type == "other");
+      setAllComplaints(res);
+    }
   }
 
   return (
@@ -107,7 +115,8 @@ const AllComplaints = () => {
                   <option value="all">All</option>
                   <option value="software">Software</option>
                   <option value="hardware">Hardware</option>
-
+                  <option value="network">Network</option>
+                  <option value="other">Other</option>
                 </CFormSelect>
               </div>
               <div className='col-6'>
@@ -141,12 +150,7 @@ const AllComplaints = () => {
                       >
                         Lab
                       </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Product Name
-                      </th>
+                     
                       <th
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -181,13 +185,11 @@ const AllComplaints = () => {
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
-                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
+                                <div className="text-base font-medium text-gray-900">{item.lab && item.lab.name }</div>
                               </div>
                             </div>
                           </td>
-                          <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.product && item.product.name}
-                          </td>
+                        
                           <td className="text-base px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {item.type && item.type}
                           </td>

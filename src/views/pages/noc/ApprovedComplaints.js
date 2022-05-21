@@ -139,12 +139,7 @@ const AllComplaints = () => {
                                             >
                                                 Lab
                                             </th>
-                                            <th
-                                                scope="col"
-                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                            >
-                                                Product Name
-                                            </th>
+                                          
                                             <th
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -181,13 +176,11 @@ const AllComplaints = () => {
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
-                                                                <div className="text-base font-medium text-gray-900">{item.lab}</div>
+                                                                <div className="text-base font-medium text-gray-900">{item.lab && item.lab.name}</div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className=" text-base px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                        {item.product && item.product.name}
-                                                    </td>
+                                                    
                                                     <td className="px-2 py-2 whitespace-nowrap">
                                                         <div className="flex items-center">
                                                             <div className="ml-4">
@@ -195,13 +188,13 @@ const AllComplaints = () => {
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-base font-medium">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-left text-base font-medium">
                                                         {
                                                             item.status == "completed" ? "Completed" : dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)) < 0 ? `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(1, 4)} day exeeded ` : `${isNaN(dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline))) ? "No deadline given" : `${dateDiffInDays(new Date(), new Date(item && item.deadline && item.deadline)).toString().slice(0, 4)} days left`} `
                                                         }
                                                     </td>
 
-                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                                                         {
                                                             item.deadline ? null : <CButton color="dark" className='text-white' onClick={() => history.push(`/noc/complaintAction/${item._id}`)} >Required Days</CButton>
 

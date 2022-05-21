@@ -132,11 +132,25 @@ export const staffNav = [
         name: 'All Complaint',
         to: '/staff/Allcomplaints',
       },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Lab',
+    to: '',
+    icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
+    items: [
       {
         component: CNavItem,
-        name: 'Accepted Complaints',
-        to: '/all/accepted/complaints',
+        name: 'Add Lab',
+        to: '/lab/addlab',
       },
+      {
+        component: CNavItem,
+        name: 'All Lab',
+        to: '/lab/alllab',
+      },
+     
     ],
   },
   {
@@ -183,11 +197,6 @@ export const staffNav = [
         component: CNavItem,
         name: 'All Requests',
         to: '/all/requests',
-      },
-      {
-        component: CNavItem,
-        name: 'Accepted Requests',
-        to: '/all/accepted/requests',
       },
 
     ],

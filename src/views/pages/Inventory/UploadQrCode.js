@@ -106,7 +106,7 @@ const UploadQrCode = () => {
                           </h3>
                           <div>
                             <p class="text-gray-600 text-xl ml-4">
-                              {product && product.product.lab}
+                              {product && product.product.lab.name}
                             </p>
                           </div>
                         </div>

@@ -23,6 +23,10 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const AddUser = React.lazy(() => import('./views/components/admin/AddUser'))
 const AllUser = React.lazy(() => import('./views/components/admin/AllUser'))
 
+
+//lab management
+const AddLab = React.lazy(() => import('./views/pages/lab/AddLab'))
+const AllLab = React.lazy(() => import('./views/pages/lab/AllLab'))
 // Buttons
 // const Buttons = React.lazy(() => import('./views/components/buttons/buttons/Buttons'))
 // const ButtonGroups = React.lazy(() =>
@@ -167,6 +171,18 @@ const routes = [
     path: '/works/complaints',
     name: 'All Complaints',
     component: WorksComplaints,
+    exact: true,
+  },
+  {
+    path: '/lab/addlab',
+    name: 'Add Lab',
+    component: AddLab,
+    exact: true,
+  },
+  {
+    path: '/lab/alllab',
+    name: 'All Lab',
+    component: AllLab,
     exact: true,
   },
   {

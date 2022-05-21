@@ -53,6 +53,8 @@ const AllEquipments = () => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  console.log(products)
+
   useEffect(() => {
     dispatch(allProducts())
   }, [dispatch, loading, refresh])
@@ -237,7 +239,7 @@ const AllEquipments = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {product.lab}
+                            {product.lab && product.lab.name && product.lab.name }
                           </td>
                           <td className="px-2 py-2 whitespace-nowrap">
                             <div className="flex items-center">
