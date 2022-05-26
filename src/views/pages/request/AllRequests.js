@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import axios from "axios"
 import Breadcrumbs from 'src/components/Breadcrumbs'
 import { Modal, Button } from 'react-bootstrap';
+import { dateDisplay } from "src/services/helper/helper"
 const AllRequest = () => {
     const breadCrumbsInfo = [{ name: "Home", href: '/' }, { name: "Request" }, { name: "All Requests" }];
     const [requests, setRequests] = useState([]);
@@ -138,7 +139,13 @@ const AllRequest = () => {
                                                 scope="col"
                                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                             >
-                                                Edit
+                                                Recovery Date
+                                            </th>
+                                            <th
+                                                scope="col"
+                                                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                            >
+                                                Action
                                             </th>
                                         </tr>
                                     </thead>
@@ -185,9 +192,10 @@ const AllRequest = () => {
                                                         {item.nocApproved ? "Approved" : "pending"}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                        <button >
-                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                        </button>
+                                                        {item.deadline ? dateDisplay(item.deadline) : "no date give yet"}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        
                                                         <button
                                                             style={{ padding: '5px' }}
                                                             onClick={() => deleteHandler(item._id)}

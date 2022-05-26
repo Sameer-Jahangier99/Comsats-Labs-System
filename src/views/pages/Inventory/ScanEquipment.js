@@ -76,7 +76,7 @@ const ScanEquipment = () => {
               displayProduct && <div class="bg-white overflow-hidden" >
                 <CRow >
                   <CCol md={4}>
-                    <img style={{ height: "100% ", width: "100%", objectFit: "cover" }} src={`${imageUrl}${product && product.product.productImage}`} alt={product && product.product.name} ></img>
+                    <img style={{ height: "300px ", width: "300px", objectFit: "cover" }} src={`${imageUrl}${product && product.product.productImage}`} alt={product && product.product.name} ></img>
                   </CCol>
                   <CCol md={7}>
                     <CRow>

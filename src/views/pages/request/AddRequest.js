@@ -105,6 +105,7 @@ const AddRequest = () => {
                                             <option value="lab 2">lab 2</option>
                                             <option value="lab 3">lab 3</option>
                                             <option value="lab 4">lab 4</option>
+                                            <option value="lab 5">lab 5</option>
                                         </CFormSelect>
                                     </CInputGroup>
 

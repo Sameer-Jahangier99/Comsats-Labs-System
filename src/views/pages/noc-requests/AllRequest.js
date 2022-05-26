@@ -50,7 +50,6 @@ const AllRequest = () => {
             setRequests(temp);
 
         }
-
     }
 
     const approveComplaint = async (item) => {

@@ -40,7 +40,7 @@ const RequestTime = () => {
         setSelectedDate(e);
         setApiDate(e);
     }
-
+   
 
     useEffect(async () => {
         const config = {
@@ -50,10 +50,11 @@ const RequestTime = () => {
             },
         }
         const { data } = await axios.get(`${BASE_URL}/request/${complaintId}`, config)
-        setRequest(data[0]);
+        
+        setRequest(data.data);
     }, [])
 
-    console.log(request);
+   
 
     const submitHandler = async (e, id) => {
         e.preventDefault();
@@ -71,10 +72,10 @@ const RequestTime = () => {
             }
 
             const { data } = await axios.post(`${BASE_URL}/request/deadline/${id}`, { ApiDate }, config)
-            if (data) {
+          
                 setLoading(false)
-                history.push("noc/approve/requests")
-            }
+                history.push("/noc/approve/requests")
+           
         }
 
     }
@@ -108,25 +109,27 @@ const RequestTime = () => {
                         </CRow>
                         <CRow>
                             <CCol md={8}>
-
                                 <CRow>
-                                    <CCol md={12} className="d-flex">
-                                        <h6>Complaint Note: </h6>
-                                        <p className='ml-2'>{request && request.note && request.note}</p>
+                                    <CCol md={12} className="d-flex align-items-center">
+                                        <div className='font-bold'>Request Note: </div>
+                                        <div className='ml-2'>{request && request.note && request.note}</div>
                                     </CCol>
+                                    <hr className='m-0'></hr>
                                 </CRow>
                                 <CRow>
-                                    <CCol md={12} className="d-flex">
-                                        <h6>Complaint Type: </h6>
-                                        <p className='ml-2'>{request && request.type}</p>
+                                    <CCol md={12} className="d-flex align-items-center">
+                                        <div className='font-bold'>Request Type: </div>
+                                        <div className='ml-2'>{request && request.type}</div>
                                     </CCol>
+                                    <hr className='m-0'></hr>
                                 </CRow>
 
-                                <CRow>
-                                    <CCol md={12} className="d-flex">
-                                        <h6>Lab: </h6>
-                                        <p className='ml-2'>{request && request.lab && request.lab}</p>
+                                <CRow className='mb-4'>
+                                    <CCol md={12} className="d-flex align-items-center">
+                                        <div className='font-bold'>Lab: </div>
+                                        <div className='ml-2'>{request && request.lab && request.lab}</div>
                                     </CCol>
+                                    <hr className='m-0'></hr>
                                 </CRow>
 
 

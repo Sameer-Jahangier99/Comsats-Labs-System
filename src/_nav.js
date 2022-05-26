@@ -53,21 +53,18 @@ export const adminNav = [
         name: 'Scan Equipment',
         to: '/scanequipment',
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Barcode Search',
-      //   to: '/barcodesearch',
-      // },
+     
       {
         component: CNavItem,
         name: 'Add Equipment',
         to: '/addequipment',
       },
-      // {
-      //   component: CNavItem,
-      //   name: 'Update Equipement',
-      //   to: '/updateequipment',
-      // },
+      {
+        component: CNavItem,
+        name: 'Upload QrCode',
+        to: '/uploadQrCode',
+      },
+     
     ],
   },
   // {
