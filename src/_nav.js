@@ -53,18 +53,21 @@ export const adminNav = [
         name: 'Scan Equipment',
         to: '/scanequipment',
       },
-     
+      // {
+      //   component: CNavItem,
+      //   name: 'Barcode Search',
+      //   to: '/barcodesearch',
+      // },
       {
         component: CNavItem,
         name: 'Add Equipment',
         to: '/addequipment',
       },
-      {
-        component: CNavItem,
-        name: 'Upload QrCode',
-        to: '/uploadQrCode',
-      },
-     
+      // {
+      //   component: CNavItem,
+      //   name: 'Update Equipement',
+      //   to: '/updateequipment',
+      // },
     ],
   },
   // {
@@ -566,6 +569,11 @@ export const TeacherNav = [
         component: CNavItem,
         name: 'Software Installation',
         to: '/softwareinstallationrequest',
+      },
+      {
+        component: CNavItem,
+        name: 'All Request',
+        to: '/AllRequest',
       },
     ],
   },

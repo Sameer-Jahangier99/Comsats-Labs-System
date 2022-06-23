@@ -114,6 +114,9 @@ const DCORejectedRequest = React.lazy(() => import('./views/pages/dco-request/Re
 const SoftwareInstallation = React.lazy(() =>
   import('./views/pages/teacher-request/SoftwareInstallation'),
 )
+const AllFacultyRequest = React.lazy(() =>
+  import('./views/pages/teacher-request/AllRequest'),
+)
 
 //Teacher Feedback
 const InstalledSoftware = React.lazy(() =>
@@ -354,6 +357,12 @@ const routes = [
     path: '/softwareinstallationrequest',
     name: 'Software Request',
     component: SoftwareInstallation,
+    exact: true,
+  },
+  {
+    path: '/AllRequest',
+    name: 'All Request',
+    component: AllFacultyRequest,
     exact: true,
   },
   {

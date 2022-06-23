@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { allComplaintAction } from 'src/services/actions/complaintActions'
 import { CRow, CCol, CFormSelect } from '@coreui/react'
-import { dateDisplay } from 'src/services/helper/helper'
 
 import { Modal, Button } from 'react-bootstrap'
 import axios from 'axios'
@@ -246,13 +245,7 @@ const AllComplaints = () => {
                         scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                       >
-                        Tineline
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                      >
-                        Action
+                        Edit
                       </th>
                     </tr>
                   </thead>
@@ -303,28 +296,17 @@ const AllComplaints = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {item.committeApproved ? 'Approved' : 'pending'}
                           </td>
-
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.type != 'hardware'
-                              ? item.nocApproved
-                                ? 'Approved'
-                                : 'pending'
-                              : null}
-                          </td>
-
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {item.type == 'hardware'
-                              ? item.worksApproved
-                                ? 'Approved'
-                                : 'pending'
-                              : null}
-                          </td>
-
+                         
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.type != "hardware" ?  item.nocApproved ? 'Approved' : 'pending' : null}
+                            </td>
+                        
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {item.type == "hardware" ?  item.worksApproved ? 'Approved' : 'pending' : null}
+                            </td>
+                      
                           <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            {item.deadline ? dateDisplay(item.deadline) : 'no date give yet'}
-                          </td>
-
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                           
                             <button
                               style={{ padding: '5px' }}
                               onClick={() => deleteHandler(item._id)}

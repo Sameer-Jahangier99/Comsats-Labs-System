@@ -51,7 +51,6 @@ const AddEquipments = () => {
 
   useEffect(async()=>{
     const { data } = await axios.get('/lab/' )
-    
     if(data.success)
     {
       setLabs(data.data);

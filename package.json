@@ -1,6 +1,6 @@
 {
   "name": "@coreui/coreui-free-react-admin-template",
-  "proxy": "http://localhost:8000",
+  "proxy": "https://comsatslabsbackend.herokuapp.com",
   "description": "CoreUI Free React Admin Template",
   "version": "4.0.0-rc.0",
   "config": {

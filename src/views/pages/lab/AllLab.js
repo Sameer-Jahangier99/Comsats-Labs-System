@@ -18,49 +18,58 @@ import {
   CModalFooter,
   CAlert,
 } from '@coreui/react'
+import { Checkbox } from 'antd'
 import Breadcrumbs from 'src/components/Breadcrumbs'
 const AllLab = () => {
-  const breadCrumbsInfo = [{ name: "Home", href: '/' }, { name: "Lab " }, { name: "All Labs" }];
+  const breadCrumbsInfo = [{ name: 'Home', href: '/' }, { name: 'Lab ' }, { name: 'All Labs' }]
   const [loading, setLoading] = useState(true)
-  const [show, setShow] = useState(true)
+  const [show, setShow] = useState(false)
   const [showDelete, setShowDelete] = useState(true)
   const [id, setId] = useState(null)
+  const [softwares, setSoftwares] = useState()
+  const [software, setSoftware] = useState('')
   const [name, setName] = useState(null)
-  const [labs,setLabs]=useState()
+  const [labs, setLabs] = useState()
 
-
-  
   useEffect(() => {
-    const AllLab=async()=>{
-      const {data}= await axios.get("/lab/allLab")
-      setLabs(data.data)
+    const AllLab = async () => {
+      const { data } = await axios.get('/lab/allLab')
+      setLabs(data)
     }
 
     AllLab()
-
-    
   }, [labs])
+
   const submitHandler = (lab) => {
-console.log(lab)
+    console.log(lab)
+    setName(lab.name)
+    setId(lab._id)
+    setLoading(false)
   }
   const deleteHandler = (id) => {
-console.log(id)
-    
+    console.log(id)
   }
-  const handleUpdate = () => {
-console.log('click')
-  
+  const handleUpdate = async () => {
+    if (software) {
+      try {
+        const { data } = await axios.put('/lab/updateLab', { _id: id, softwares: software })
+        if (data) {
+          setShow(true)
+        }
+      } catch (error) {}
+      // setLoading(true)
+    }
   }
 
   return (
     <>
-      <main className='main-div'>
+      <main className="main-div">
         <Breadcrumbs breadCrumbsInfo={breadCrumbsInfo} />
-        {/* {show && (
+        {show && (
           <main className="alert">
             <div>
               <CAlert color="success" style={{ textAlign: 'center' }}>
-                user updated
+                Lab updated
               </CAlert>
             </div>
             <div>
@@ -70,7 +79,7 @@ console.log('click')
             </div>
           </main>
         )}
-        {showDelete &&  (
+        {/* {showDelete &&  (
           <main className="alert">
             <div>
               <CAlert color="danger" style={{ textAlign: 'center' }}>
@@ -100,7 +109,7 @@ console.log('click')
                       >
                         Name
                       </th>
-                   
+
                       <th
                         scope="col"
                         className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -159,7 +168,7 @@ console.log('click')
               </div>
             </CModalTitle>
           </CModalHeader>
-          {/* <CModalBody>
+          <CModalBody>
             {loading ? (
               ''
             ) : (
@@ -174,9 +183,12 @@ console.log('click')
                               <i className="fa fa-user" aria-hidden="true"></i>
                             </CInputGroupText>
                             <CFormInput
-                              required
+                              placeholder="Name"
+                              autoComplete=""
                               value={name}
                               onChange={(e) => setName(e.target.value)}
+                              required
+                              disabled
                             />
                           </CInputGroup>
                         </CCol>
@@ -187,62 +199,11 @@ console.log('click')
                             </CInputGroupText>
                             <CFormInput
                               type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="Name of software "
+                              value={software}
+                              onChange={(e) => setSoftware(e.target.value)}
                               required
                             />
-                          </CInputGroup>
-                        </CCol>
-                        <CCol md={6} className="mb-4">
-                          <CInputGroup>
-                            <CInputGroupText>
-                              <i className="fa fa-lock" aria-hidden="true"></i>
-                            </CInputGroupText>
-                            <CFormInput
-                              type="password"
-                              placeholder="Password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                            />
-                          </CInputGroup>
-                          {matchErr ? (
-                            <small className="text-red-500 mb-5 mt-0">{matchErr}</small>
-                          ) : null}
-                        </CCol>
-                        <CCol md={6}>
-                          <CInputGroup>
-                            <CInputGroupText>
-                              <i className="fa fa-lock" aria-hidden="true"></i>
-                            </CInputGroupText>
-                            <CFormInput
-                              type="password"
-                              placeholder="Confirm Password"
-                              value={confirmPassword}
-                              onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                          </CInputGroup>
-                          {matchErr ? (
-                            <small className="text-red-500 mb-5 mt-0">{matchErr}</small>
-                          ) : null}
-                        </CCol>
-                        <CCol xs={6} className="mb-4">
-                          <CInputGroup className="mb-4">
-                            <CInputGroupText>
-                              <i className="fas fa-user-tag"></i>
-                            </CInputGroupText>
-                            <CFormSelect
-                              aria-label="Default select example"
-                              value={role}
-                              onChange={(e) => setRole(e.target.value)}
-                            >
-                              <option>Select User Role</option>
-                              <option value="admin">Admin</option>
-                              <option value="labstaff">Lab Staff</option>
-                              <option value="committee">Committee</option>
-                              <option value="dco">DCO</option>
-                              <option value="hod">HOD</option>
-                              <option value="teacher">Teacher</option>
-                            </CFormSelect>
                           </CInputGroup>
                         </CCol>
                       </CForm>
@@ -256,7 +217,7 @@ console.log('click')
                 </div>
               </div>
             )}
-          </CModalBody> */}
+          </CModalBody>
           <CModalFooter>
             <CButton color="danger" onClick={() => setLoading(true)}>
               Close
@@ -264,14 +225,8 @@ console.log('click')
           </CModalFooter>
         </CModal>
       </main>
-
     </>
-    )
+  )
 }
 
 export default AllLab
-
-
-
-
-

@@ -48,7 +48,6 @@ const AllComplaints = () => {
 
     const filterHandler = (value) => {
         if (value === "deadline") {
-            
             setShowProgess(true)
             let res = complaintHistory.filter((item) => item.deadline && item.status == "progress")
             setShowProgess(true)
@@ -67,7 +66,6 @@ const AllComplaints = () => {
         }
 
     }
-   
 
     const complaintCompleted = async (item) => {
         const config = {

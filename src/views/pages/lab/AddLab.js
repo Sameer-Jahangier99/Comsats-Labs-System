@@ -17,29 +17,14 @@ import { Alert } from 'src/components/Alert'
 import Breadcrumbs from 'src/components/Breadcrumbs'
 import { Checkbox } from 'antd'
 import axios from 'axios'
-import QRCode from 'qrcode'
 const AddLab = () => {
   const breadCrumbsInfo = [{ name: 'Home', href: '/' }, { name: 'Lab' }, { name: 'Add Lab' }]
   const [name, setName] = useState()
   const [softwares, setSoftwares] = useState()
   const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState('')
-  const [qrId, setQrId] = useState()
   function onChange(checkedValues) {
     console.log('checked = ', checkedValues)
     setSoftwares(checkedValues)
-  }
-
-  const generateQrCode = async (e) => {
-    e.preventDefault()
-    try {
-      const id = Date.now().toString(36) + Math.random().toString(36)
-      const response = await QRCode.toDataURL(id)
-      setImageUrl(response)
-      setQrId(id)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   const submitHandler = async (e) => {
@@ -49,8 +34,6 @@ const AddLab = () => {
     let LabData = {
       name,
       softwares,
-      imageUrl,
-      qrId
     }
     const { data } = await axios.post('/lab/', LabData)
     if (data.success) {
@@ -67,7 +50,6 @@ const AddLab = () => {
           <CRow className="justify-content-center">
             <CCol md={12} className="bg-white rounded-lg">
               <CForm className="row mx-4 g-3">
-                {/* onSubmit={submitHandler} */}
                 <CCol md={12}>
                   {/* {error && (
                             <Alert msg={error} color={"danger"} />
@@ -95,23 +77,6 @@ const AddLab = () => {
                     />
                   </CInputGroup>
                 </CCol>
-                <CCol md={3}>
-                    <button
-                      className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg"
-                      onClick={(e) => generateQrCode(e)}
-                    >
-                      Generate Qr Code
-                    </button>
-                  </CCol>
-                  <CCol md={3} className='mt-0'>
-                    <CInputGroup className="d-flex justify-content-center align-items-center">
-                      {imageUrl ? (
-                        <a href={imageUrl} download>
-                          <img src={imageUrl} alt="img" />
-                        </a>
-                      ) : null}
-                    </CInputGroup>
-                  </CCol>
                 <CRow>
                   <Checkbox.Group style={{ width: '100vw' }} onChange={onChange}>
                     <CCol md={12}>
@@ -225,7 +190,6 @@ const AddLab = () => {
                     </CCol>
                   </Checkbox.Group>
                 </CRow>
-
 
                 <CRow className="flex items-center justify-start mb-3">
                   <CCol md={3} xs={8}>
